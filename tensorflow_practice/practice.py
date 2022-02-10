@@ -30,4 +30,16 @@ def outer_function(x):
     return maths(x,y,b)
 
 result = outer_function(tf.constant([[1.0,2.0]])).numpy()
-print(result)
+# print(result) = 12
+
+# now start working with graphs
+def simple_relu(x):
+    if tf.greater(x,0):
+        return x
+    else:
+        return 0
+
+tf_simple_relu = tf.function(simple_relu)
+
+# print(tf_simple_relu(tf.constant(1)).numpy())# = 1
+# print(tf_simple_relu(tf.constant(-1)).numpy())# = 0
