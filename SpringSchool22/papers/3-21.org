@@ -1,0 +1,265 @@
+* Stats
+*** TODO review my chapter notes for 5,6,7, and 8.
+- this chapter deals with both two and three-way anova.
+- we have more than one variable of interest
+  - me might even do two-ways anova with latin squares for this instance.
+- These have fixed effects.  We do not deal with random effects until chapters 13 and 14.
+- we have more rows in our anova table, A*B primarily.
+- In Ch. 4 we did blocking. Now we have interaction of A and B.
+  - we could also have A*B*C.
+- We can pot A vs B and look at how low and high A affect B.
+  - they do not interact if they are paralle.
+    - however, if they cross or get wider then they interact.
+- A = (A+ + A-) / 2.  We look at the average of A for its average effect.
+- Now AB is wonky as we do the diagonals. We will not do hand calculations.
+** Contour plot
+- if the contour plot is flat then there is no interaction.
+- X1, X2, and x1*x2 are now in the regression equation.  We use Beta*x1*x2 to show the regression interaction.
+  - anova will give us the full interaction.  We also get the full interaction in regression.
+    - the contour plot will be round when A & B interaction, so A*B is significant.
+- Ch. 12 talks about response surface.
+  - We need both A and B in the model, otherwise we miss their interaction.
+** 5.3 Example 5.1
+- We have 2 factors and 4 relpicates.  So 2 column variables.
+  - 3 levels for each factor.
+    - anova assumes everything is levels.
+      - replicates = 4, so 3*3*4 = 36 observations.
+	- a = level of factor, b = level of factor, n = replicate, k = with8in replicate.
+- SS_total = A + B + A*B + S_error
+- df = total is a*b*n - 1, a - 1 + b -1 + (a - 1)*(b - 1) + a*b*(n - 1)
+  - error is the a*b*(n - 1)
+- Remember that MS is always / MS_E, where MS_error = SS_error/df_error.
+- if A has more than two levels then we need a pairwise comparison of A, only if A is significant.
+** Video 2 for Chapter 5.
+- We have hand calculations for the anova table for calculating SS_A and SS_B.
+  - We get error by whatever is leftover after we remove SS_A, B, and AB.
+- We use JMP for output.
+- We also need to check our multiple anova model for our assumptions at the end.
+  - these include assumptions for normality and randomness of the residuals.
+  - we do this by checking the qq-plot and the residuals plot.
+- You need to check residuals of both A and B.
+  - We can change the anticipated root means squared error to 1 or higher or change alpha to affect the power.
+- we are not always interested in the interaction.
+  - 3 hypotheses, 3 pairwise + 3 pairwise = 9 tests.
+    - 3 variables and 3 levels each.
+      - with 3 levels we do pairwise with a,b; a,c; b,c; so 3 for each.
+- error + ab interaction = error plot when we have no interaction.
+** One interaction per cell.
+- note that the anova table for one interaction per cell is different in terms of the calculations.
+  -   
+- The hypothesis is that mu1 = mu2 = mu3.  H0: there is no interaction between A and B.
+  - Ha: There is interaction between A and B.
+** 3 factors
+- A, B, C, AB, AC, BC, ABC, Error, Total
+- ab df = (a-1)*(b-1)
+- abc df = (a-1)*(b-1)*(c-1)
+- We divide everything by MS_error for the F_0 value.
+- Error is the most important one.  You can only find this by summing the other SS and subtracting from total.
+- at alpha = 0.05 you do not reject.  At 0.05 there is no interaction.
+- anova treats every factor as qualitative.
+  - we might have a mix of qual and quant factors.
+- We can do regression.  We can also capture the quadratic effect with regression.
+- We model SS.  We have residual and pure error.  Both are the same.
+- lack of fit is 0.
+  - B has 3 levels, so we have a dummyvariable and only show B1 and B3.  B3 is the absence of both.
+- Coded factors means type 1 is -1 or +1.
+  - look at the contour plot in order to see interaction.
+** Blocks
+- you can have A, B, AB, and block.
+  - We have to customize the block in SPSS as only a main effect.
+    - We can do a 6x6 latin-square with two-way anova.  In this case we have f and g variables for the anova levels.
+
+
+
+** Chapter 5 - 3-way anova
+- dependent variable = response
+- we do the full model here.
+  - we do bonferroni for pairwise comparison.
+- keep univariate unstandardized for BOTH the predicted and residuals.
+  - we analyze both the predicted and residuals.
+- note that response = numeric.
+- plot all 2-way interactions. 3-way interaction too.
+- make sure to have H0 and Ha FOR ALL P-VALUES
+- Plots should be parallel if there is no interaction.
+** with blocks (SPSS)
+- operator is block.
+- variance should be equal across all factors.  This is why we do a test of homogeniety (i think) across all the factors.
+  - all  three factors and the block are factors and are fixed.
+- variance of residuals should be random.
+- only additive for the blocked factor.
+- note to get all 2-way interactions like A*B in the model.
+- Plot each alone and then see if anything is interacting.
+- look at all interactions for significance.  We HAVE HYPOTHESIS FOR THE INTERACTIONS.
+  - NO HYPOTHESIS FOR BLOCKED.  Make sure to get the hypothesis for A*B
+-     
+- do leven test for means, shapiro for normality, then check normalizty and residuals randomness.
+  - have a hypothesis for each pairwise comparison and list each H0 and Ha.
+    - do bonferroni for this.
+
+** Chapter 6
+- looking at 2^k factorial design.
+- we have k factors, each with two levels.
+- We only have high or low factors.
+- later we will do 3^k analysis.  2^2 means anova but each factor has 2-elvels.
+- 4 minimum observations in 2^2 factorial design.
+- 2 factors means A-B-, A+B+, A-B+, A+B-.  We think about how the two factors interact in those four ways.
+- we do not really go above 3^k design, not recommended.
+- 2^2 with 3 replicate = 12 observations.  We have the 4 interactions and the 3 replications.
+- Note how we write out the rows, 00, 01, 10, 11.
+- these ar ethe highs and lows
+*** anova factor design
+- we ALWAYS graphically and numerically analyze the results.
+- no hand calculations here.  The goal is to estimate the factor effects.
+- 2^k is using hte full model.
+- A = A+ + A-.  We average A.  This is the average ffect of A.  
+- always check the residuals afterwards.  Look at both the normality and plot residual vs predicted.
+  - the residuals vs predicted should look random I think.
+  - because we want a model with the same error throughout.
+*** 2^3 factorial design
+- 3 variables (each variable is a factor).  So we have 3 factors.
+- we have eight runs.  -, +, -, +.  Then -- ++, then - - - - + + + +
+  - for the rows
+- remember that -1 and +1 actually mean numbers in the real world.
+- complete matrix for hand-calculations.
+  - in the quiz he wants us to create the factorial effect.  We have I, which is all positive.
+- AB is + when they both match, i.e. both are positive or negative.  AB = A * B.  We can just multiply the sign.
+- the product of any two columns leads to another column.
+  -
+- B^2 = 1, so we remove it.
+- 2^5 with 1 blcok, or 2^5 with latin-square, or 2^5 with graeco-latin square.
+- I need to complete the matrix.  We have I (all positive) and we work toward everything else.
+  - maybe do exercises in order to find I.
+** TODO chapter 7
+- 2^k design with blocks
+- We do confounding.  If ABC is positive vs negative
+- blocking <- control nuisance variables
+- we know and can control
+  - covariate for variables we cannot control.
+- two cases:
+  1. replicated
+  2. unreplicated.
+- We have n replicates then each replicate is a block.
+- runs within blocks are randomized.
+  - if I'm running the morning data I need to randomize when I run the morning data.
+*** example
+- we have three blocks, one for each replicate.
+- block dof = b - 1, if 3 replicates than df = 3 - 1 = 2
+*** Confounding
+- we can block on a*b.
+- we run some parts in block 1 and some in block 2.
+  - two blocks that contain all data.  One is positive and one is negative.
+- blocks must be two levels in order to keep a balanced design.
+  - we call the factors we make the blocks on confounded.  We confound on these.
+- if we have multiple replicates than we can do a different confounding for each replicate.
+- we block within each replicate.
+*** confounding in blocks
+- We 2^4 = 16.  k = 4 means 4 variables.
+- we block on abcd so no p-value for abcd.
+  - note that all df = 1 except for error and total.
+- We do 1 choose k + 2 choose k + 3 choose k + 4 choose k.
+- you can have 2,4,8 or 2^p blocks for p >=2.
+  - you need at least two blocks or a factor of 2^p.
+- see table 7.7 for 2^p blocks.
+- p = blocks.  You have two levels per block since it is 2^k design.
+*** example
+- in relpicate 1 we confound abc, in replicate 2 we confound ab.
+  - one block per replicate, two levels for each block.
+  - this is abc confounded and ab confounded.
+    - we have confounded on abc and ab.
+- we only analyze the factor combinations without confounding.
+- when in doubt block.
+  - rely on randomization to help balance the nuisance effect.
+- you use ancova for nuisance factors you know but cannot control.
+** TODO Chapter 8
+- 7 was blocked, chapter 8 is fractional factorial design.
+  - this is 2^k - p.
+- you have k = 10 but we can make it fewer.
+  - we do not need all k factors.
+- k must be much larger than p. Table 14 tells us valid p values for k, e.g., 10 and 4.
+- The size of the design grows quickly as we get more variables.
+- 2^5 design but we can still analyze 2^10.
+- we use this when we are not familiar iwth the system.  We can sometimes add the center point from replications.
+- we do not replicate in order to have a smaller sample size
+1. sparsity of effects.  We do not want a lot. We want fewer factors. The system is dominated by main effects.
+   - we are interested in two-way interaction, maybe not 3,4, or 5-way interactions.
+2. projection: every fractional factorial contains the full factorial in fewer factors.
+3. we can add runs to resolve any ambiguous results.
+*** Example
+2^(k-1) is known as one-half fraction.  It only requires half the data.
+- I = ABC.  I defines the relation.
+- we call I the word generator.
+  - I is the set of columns that are +.  It is all combinations of at least 2 columns that are all +.
+    - ABC = I because it is always positive.
+- I is called the generator or word.
+- one-half fraction means we do not observe all the combinations.
+- A is alias with BC since A^2*B*C = BC since A^2 = 1 and I = ABC, so I*A = BC.
+- aliasing occurs in all fractional designs.
+- In our case the effects of A = effects of BC.
+  - we do not need to find the interaction between B & C since it is equivalent to the effect of A.
+- I can also be -ABC
+- I must always be defined as all-positive.
+- 3 resolution designs:
+  - main effect (me) = 2 factor interactions
+  - you need I to be 3 in these cases.
+- resolution 4 designs
+  - 2fi = 2fi, so AB might = BC
+    - minimum of 4 letters for I
+- resolution 5 designs:
+  2fi = 3fi, so we can make 3fi via our 2fi we have.
+- SASS will ask your I.
+  - you might have multiple Is as K grows.
+*** example
+- The fractional result will give you the same result as 2^k anova.
+  - same power.
+    - but we wave on the number of observations required.
+- no hand calculations, we'll do this in SASS          
+
+
+* Bi-Weekly Meeting
+** DONE further prioritize my goals for this week
+- we want to move toward resubmitting the paper.  Therefore, answering comments is extremely helpful. <- done
+- it is also helpful to work on graphics
+- there is a requirement to do more theory.  This will eventually need to happen.  It is useful to understand the perspective Dr. Hall is coming from.
+** DONE get workshop details for the two I signed up for, put them on the calendar.
+   CLOSED: [2022-03-22 Tue 17:35]
+*** DONE get the two links for the workshops
+    CLOSED: [2022-03-22 Tue 17:35]
+- April 12 3-5pm.
+** TODO [#A] write down comments for v1/v2 that are remaining.
+*** TODO  add a finding to the abstract:
+- such as: Via findings in our use case we identify that website conversions and movements to a brand’s company page can be predicted based on engagements. "
+** TODO [#A] read through methodology for v2
+** TODO [#B] outline the graphs you want to add and how you will go about adding them.
+*** TODO Visualize member state + engagement = final state
+*** TODO another try on the relative sizes
+- might do this one manually too.   
+*** TODO create graph showing movement between clusters.
+- It would be super interesting to visualize this marketing funnel graphically. E.g., using a sankey diagram or similar flow diagram, visualize  how often cluster transitions occur.
+*** TODO improve labels on the existing graphs (and communication of the data)      
+** DONE outline open tasks
+   CLOSED: [2022-03-22 Tue 17:38]
+** TODO [#C] work through the theory aspects that Dr. Hall sent to me over email.
+** TODO [#C] review Dr. Hall's comments on my theory doc.
+*** TODO locate the theory doc
+
+** My goal for tonight should be to attempt the creation of a visual of the marketing funnel
+- which set of data to use for this?
+- I want to show stages and the transitions
+** I can also show the state changes, though these go better in the appendix.  I only need a single one as an example.
+
+** DONE try to model the marketing funnel in space.
+   CLOSED: [2022-03-29 Tue 09:59]
+- how do I want to do this?
+- what data do I have?  I don't think I have the long-term shifts.
+  - well I actually do but they're from that other study.
+  - would be easy to show in a sankey diagram.
+- I can show the percentage shifts between clusters?  
+- use sankey to show immediate movement between clusters.  Yeah, I can easily do this.
+
+
+
+** TODO spend some time considering how cohorts might intersect with my paper (modeled conversions)
+- find public paper concerning current practice (public policy) and build on this policy document.
+  - this parti
+** TODO Dr. Hall is going to look into theory and fit to call.
+- 

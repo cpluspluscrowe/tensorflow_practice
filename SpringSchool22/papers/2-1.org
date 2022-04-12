@@ -1,0 +1,89 @@
+* Paper  
+** DONE remaining big comments
+   CLOSED: [2022-02-08 Tue 10:13]
+** DONE read through the remaining comments
+    CLOSED: [2022-02-08 Tue 10:13]
+** DONE summarize each of the remaining comments
+    CLOSED: [2022-02-08 Tue 10:13]
+- include a portion in the implications where I talk about our discovered effects of the time granularity.
+
+** DONE comments to address
+    CLOSED: [2022-02-06 Sun 14:32]
+# before conclusion:
+I think the comparison of this modeling assumption - daily aggregation vs monthly aggregation - is super interesting and needs to be more prominent. Our main contribution is proposing a purely data-driven method to create a marketing funnel and predict customer transitions between the funnels. Hence, we need to make some decisions in terms of aggregating data: For creating the funnel itself, (if I understand the current argument correctly) monthly aggregation has some benefits, but for predicting cluster transitions, it might be too aggregated. However, using smaller time periods for aggregation increases the ability to predict cluster transitions and relevant engagement factors, but has other downsides (what are they?).
+
+- moved other objection to the rewrite use-case, the overall story
+
+** DONE 
+    CLOSED: [2022-02-06 Sun 14:41]
+# above which engagements precede cluster transitions
+This is a good discussion, but dangerous as you're essentially throwing a complete, new model into the discussion. This needs to be extended, e.g., providing additional information on cluster transition distributions, changes in cluster membership / cluster characteristics when compared to monthly aggregation, etc.
+Overall it's great to see additional analyses, as it will be very helpful to show that we tried different things / models
+
+- I feel that I already covered this in some of the changes I made this week.
+
+** DONE rewrite to emphasize the use-case perspective for advertisers
+   CLOSED: [2022-02-08 Tue 10:13]
+
+- change story to propose a data-driven method that can provide value to the marketing community.  Also, specific design decisions will impact how well this novel method will address different relevant questions and aspects that marketing experts are interested in.
+
+** DONE meet with Dr. Hall concerning resubmission    
+   CLOSED: [2022-02-08 Tue 10:19]
+** TODO Consider visualizing via a Sankey diagram for user flows through the funnel
+- would be useful for showing how flows exist and work <- idk if I have this data anymore.
+It would be super interesting to visualize this marketing funnel graphically. E.g., using a sankey diagram or similar flow diagram, visualize  how often cluster transitions occur.
+    
+** TODO [#C] find citations from this journal I can include.
+- goal is to find something kind-of close to my method.
+*** DONE Do we discuss this in later stages? I.e., the similarity of the data-driven funnel to proposed marketing funnels from research?
+    CLOSED: [2022-02-08 Tue 10:14]
+-  I'll add a todo and address in the discussion.
+*** DONE After the RQs, we should provide information on a) how we answer the RQs, b) what the most important overall results are, and c) what the main implications of these results are for researchers and practitioners   
+    CLOSED: [2022-02-08 Tue 10:14]
+*** DONE find the journal url  
+    CLOSED: [2022-01-28 Fri 08:34]
+- https://www.journals.elsevier.com/international-journal-of-research-in-marketing/call-for-papers/special-issue-on-the-tensions-and-opportunities-of-new-technologies-in-marketing    
+** TODO [#B] visualize clusters
+*** how to concisely visualize CLUSTER TRANSITIONS
+- the cluster as well
+- put the tables in the appendix
+- might use a bar chart for the specificity an recall.  
+** DONE when I am done with the major todos ping Dr. Haas.  We can think about the overall structure.
+   CLOSED: [2022-02-08 Tue 10:14]
+* Notes
+- at some point we might need to address a reviewer comment that requires additional analysis or model changes.
+  - Journal submission is open until June (at the latest).
+- worth thinking about the likelihood of asks for different model changes.
+  - we can be proactive and change the storyline away from the
+    - less focus on design choices and emphasize using this clustering/prediction approach for the marketing funnel.
+      - that other companies can emulate.
+*** worth adding statement
+- concerning the design choices by the company, why we made these choices
+- we can comment on why we did not focus on other methods, such as hierarchical clustering.
+
+* Statistics
+** DONE understand the scope of the first quiz
+   CLOSED: [2022-02-08 Tue 10:14]
+** DONE finish chapter 2 reviews
+   CLOSED: [2022-02-08 Tue 10:14]
+** TODO create repo of sample problems and their solutions for my usage on a quiz.
+* Next week tasks (generated over the past week)
+** TODO I can try to speak to the potential revenue implications.  The benefit will increase engagements by x% at each stage of the marketing funnel, which result in considerable increases in the population at latter funnel stages.  
+
+* Paper Issues
+** MISSED before monday, remove github reference in paper, resubmit.
+** MISSED update email to point toward ccrowe@linkedin.com
+** DONE check if my submission went through tonight
+** MISSED send email to the editor that we've fixed the specific error (tonight).   
+- check up on the manuscript weekly, looks like I'm not receiving the emails.
+* Message  
+The paper was unsubmitted to correct the following issues:
+
+- Please select 2 preferred Associate Editors from this list: https://nam06.safelinks.protection.outlook.com/?url=https%3A%2F%2Fpubsonline.informs.org%2Fpage%2Fmksc%2Feditorial-board&amp;data=04%7C01%7Cccrowe%40linkedin.com%7Cedb8db2517d541dd320e08d9e66e2a0d%7C72f988bf86f141af91ab2d7cd011db47%7C1%7C0%7C637794183110359959%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C3000&amp;sdata=8keclrGcsmFwKI6E4lS%2F0intreZg0OpIX%2FAKYM%2B8daE%3D&amp;reserved=0.
+
+- Please make sure one of your preferred reviewers is on the editorial review board. The list is available at https://nam06.safelinks.protection.outlook.com/?url=https%3A%2F%2Fpubsonline.informs.org%2Fpage%2Fmksc%2Feditorial-board&amp;data=04%7C01%7Cccrowe%40linkedin.com%7Cedb8db2517d541dd320e08d9e66e2a0d%7C72f988bf86f141af91ab2d7cd011db47%7C1%7C0%7C637794183110359959%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C3000&amp;sdata=8keclrGcsmFwKI6E4lS%2F0intreZg0OpIX%2FAKYM%2B8daE%3D&amp;reserved=0.
+
+If you can update your submission form to satisfy these requirements and resubmit I'll be happy to process your paper. Please let me know if you have any other questions and I'll be happy to help. Thanks!
+
+
+   

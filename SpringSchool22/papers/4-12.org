@@ -1,0 +1,34 @@
+** DONE fix graphs from R
+   CLOSED: [2022-04-11 Mon 17:56]
+** DONE write out what the engagements mean
+   CLOSED: [2022-04-11 Mon 17:56]
+Cluster 1
+- Likes
+Cluster 2
+- Shares
+Cluster 3
+- External website postclick conversions
+- external website conversions  
+Cluster 4
+- impressions, external website conversions
+Cluster 5
+- landing page clicks
+Cluster 6
+- company page clicks
+Cluster 7
+- comment likes
+- comments  
+Cluster 8
+- company page clicks
+Cluster 9
+- external website postclick conversions
+- external website conversions
+*** Notes
+- note how cluster 3 and 9 are the same in their top metrics, it is the number of clicks that distinguishes the two.
+- a lot of other engagements, there might be overlap.
+- this is before objective type as far as I know.       
+** TODO name what the cluster transitions represent.
+   
+** TODO write down the major engagements that cause this engagement change.   
+
+   

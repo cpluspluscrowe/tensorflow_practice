@@ -1,0 +1,236 @@
+* Goals for this week
+** DONE share theory doc with everyone.
+   CLOSED: [2022-03-19 Sat 17:46]
+** TODO addressing comments on the word doc
+   - https://anu.au1.qualtrics.com/jfe/form/SV_80Pneekv6DmuDRA 
+- press to Chad which paper goes where when
+- we are going to work on constructing theory.
+  - will resubmit the marketing science on in the upcoming future.
+- venue about the prediction paper.
+  - if we submit to a conference will we still submit to a journal.
+    - the MISQ things are workshops the journal runs.
+** DONE bring the marketing science (Dr. Ricks) paper to the workshop.
+   CLOSED: [2022-03-19 Sat 19:42]
+- minnesota
+  - we'll get an additional round of feedback from there.
+    - in the business domain we need the theory.
+*** DONE write the one-pager for submitting Dr. Ricks' paper to the workshop.
+    CLOSED: [2022-03-19 Sat 19:42]
+- provide an optional one-page description on which I would like feedback at the workshop.
+- add this before the paper.      
+*** DONE find the link for the paper submission
+    CLOSED: [2022-03-19 Sat 18:08]
+   - https://anu.au1.qualtrics.com/jfe/form/SV_80Pneekv6DmuDRA 
+**** DONE write out the necessary talking points for the one-pager
+**** DONE find the feedback for the one-pager.
+     CLOSED: [2022-03-19 Sat 18:08]
+You are to submit a single PDF file that includes (a) your paper, which should be no more than 30 pages total length (double-spaced 12-point font; including references, tables, and figures), and (b) an optional one-page description of specific issue(s) on which they would like feedback at the workshop (to be inserted before the paper). Submissions exceeding the stipulated page length would be automatically rejected.
+
+Please name your PDF file as “YourFirstName_YourLastName”, for example, “Andrew_BurtonJones”.     
+**** DONE summarize the purpose of the workshop.
+     CLOSED: [2022-03-22 Tue 17:19]
+     
+**** DONE summarize the feedback I want on the paper at the workshop
+     CLOSED: [2022-03-19 Sat 18:25]
+- I want feedback on how to specify the contribution of the paper toward existing marketing theory.       
+**** DONE find previous feedback from this paper's submission.
+     CLOSED: [2022-03-19 Sat 18:08]
+The method is not novel.
+insufficient contribution.
+How to leverage to answer important substantive in marketing.
+- If only predicting, then focus on the novel method.
+- No attempt to talk about how this paper relates to marketing literature.
+***** Second feedback
+      
+"This paper focuses on a prediction task, where the authors build a model to predict user behavior on social media using both text and image data. The prediction model is well executed and authors show that their prediction model performs well. However, the methods are not novel.
+
+The main issue is that simply predicting consumer engagement is an insufficient contribution for publication. My suggestion to the authors is to examine how this prediction can be leveraged to answer some important substantive or policy questions in marketing. Or, if the focus is mainly on prediction, then there should be a novel method, theory, or algorithm that can be used in other settings. Further, the authors may benefit from reading the marketing literature on topics related to this paper to get a better sense of how to contribute to this literature. At this point, there is no attempt made to explain how and why this paper relates to the marketing literature. All the best with this research."
+
+Unfortunately, I must agree with the AE's assessment. Moreover, I expect that our reviewers will raise the same concerns. If I send the paper for a full review, the eventual outcome would be negative, and you and the journal would lose 2-3 months.  Therefore, our policy is not to send papers for a full review in such cases.  Accordingly, I am writing to inform you that your manuscript has been regretfully rejected for publication in Marketing Science.
+
+Thank you for submitting your work to Marketing Science.  I hope you are able to find a suitable journal for the paper.
+      
+***** First feedback
+0.1 TODO make the research questions more precise
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  - more technical content should be added
+    - specifically, more of an overview of the process for combining
+      models
+
+
+0.2 TODO improve on writing clarity
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+0.3 TODO issues with Figure-??
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+0.4 TODO user behavior needs to be clearly defined
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+0.5 TODO make the statement concerning detailing the 350k Facebook posts have a better context, ensure it's in the right location
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+1 Disagreements
+===============
+
+  - the research questions and contribution are not clear
+  - this content has already been done, see "Predicting online user
+    behavior using deep learning algorithms"
+
+
+2 Notes
+=======
+
+  - No attached files to get from Scholar One Manuscripts
+
+
+3 Reviewer 1
+============
+
+  - small typos
+  - not relevant
+  - contribution is not clear
+  - they repeat themselves a lot
+  - a lot of "could be improved"
+
+
+4 Reviewer 2
+============
+
+  - they love the abstract
+  - technically sound
+  - No strongest aspect
+  - weakest aspect is the writing.
+
+
+5 Reviewer 3
+============
+
+  - not technically sound
+  - technical contribution is unclear
+  - case study is presented
+
+
+5.1 TODO needs more references
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  - poor organization
+  - length is poor too
+  - difficult to read
+     
+** TODO submit to once my paper with Dr. Haas is ready.
+- requires its paper
+** DONE get all the committee members in a room or laptop in the same time zone in May (put this together).
+   CLOSED: [2022-03-19 Sat 17:46]
+   - need to do my proposal defense.
+   - May 26-27th
+     - invite the faculty.
+** DONE submit workshop application (https://umn.qualtrics.com/jfe/form/SV_eniJU3arSOjJ6Dk)     
+** DONE read theory paper:
+   CLOSED: [2022-03-13 Sun 16:27]
+- Makadok, R., Burton, R., & Barney, J. (2018). A practical guide for making theory contributions in strategic management. Strategic Management Journal, 39(6), 1530-1545.
+- A practical guide for making theory contributions in strategic management
+- extend, clarify, and apply
+  - think about the limitations of the theory
+- focus on extending received theory in interesting and fruitful ways.
+- Most new theory consists of modest contributions with variation and modification of existing theories.
+  - need to dissasemble theory into  its component ingredients and look into adjusting, improving, or recombining.
+- our taxonomy can be used as a tool for identifying underexplored areas
+- Although accuracy, simplicity, and generality are all desirable characteristics for a theory, it is generally considered to be impossible for any theory tofully achieve all three.
+*** Strategy Research Questions
+- Create models (ask how)
+  - inductive vs deductive
+  - process vs variance based models
+  - static vs dynamic models
+  - formal vs informal
+- Analysis (Who) and which phenomena (where)
+  - look at new or overlook phenomenon
+  - apply existing theory to a different phenomenon
+  - question the validity or utility of an existing theory
+- Causes (why is happens)
+  - introduce a new causal mechanism
+  - question an existing causal mechanisms validity or utility
+  - articular similarities/differences in a causal mechanism
+  - synthesize the causal mechanisms for mediating or moderating effects
+- variables (what happens/changes)
+  - question, redefine, clarify, broaden, or narrow existing constructs
+- boundaries, (when it happens).
+  - expose a theories hidden assumptions
+  - or internal inconsistencies
+  - relax/restrict a theories assumptions for its applications.
+**** Output
+- new theory
+- new outputs from an existing theory
+- talk about more specific outputs and special cases
+- derive new outputs by combining exising theories.
+*** Notes (Continued)
+- Rather, most contributions to theory may change one or two elements of a theory, but do not addressall aspects of a theory simultaneously.
+  - Despite their limited scope, these kinds of theory contribu-tions can be very important for the evolution of a field
+- Any theory should combine an aspect of each of the above eight parts in its proposal.
+- One obvious way to make a contribution to theory is to change the research question, either byasking a new question, modifying an existing question in some way, or applying an existing theoryto address a different question.
+- A good research question is broad enoughto interest a wide audience, yet narrow enough to be answerable.
+- Occasionally, it may even be possible to introduce an entirely new level of analysis thatresearchers have previously overlooked.
+- it is important to consider the causal mechanism for any theory
+  - such as why a person's behavior is changing.  What is the cause of behavior changes?
+    - probably an increased interest in the product
+      - or increased relevance
+      - or an increased recognition
+	- or a better understanding of the product over time, which in turn led to an increase in interest.
+- A third type of contribution would be to synthesize multiple causal mechanisms in a way thatexplores how they interact with each other through their mediating and moderating effects.
+- a theory: its boundary conditions may be unclear or subject to debate.
+- exposing or clarifying the theory's assump-tions represents a useful theoretical contribution because it serves to clarify the boundary conditions.
+-       
+** DONE theory research questions:
+   CLOSED: [2022-03-13 Sun 16:53]
+- Research Questions: Why do users respond with increased engagement to advertisements?
+    How do advertisers affect user behavior?
+     Over the long-term, does an ongoing phenomenon of influence exist?
+      Do advertisements cause positive behavior in users?
+        How can users escape the influence of advertisers or escape its ill-effects?
+	  What do users want from advertisements, if anything (probably to enhance their platform experience).
+	    How do advertisers abuse social media platforms in an attempt to influence users.
+	      Are poor advertiser tactics less efficient?
+	       To what extent do users realize the ongoing relationship they have with advertisers?
+	         What makes advertisements effective at influencing users?
+		  How do different slices within social media behave differently toward advertisements?
+		    How does branding influence stack over time?
+		     What occurs in a users mind when processing social media data, how does their processing differ in regard to advertisements?
+		       Are advertisements beneficial to users?
+		         Are advertisements negative toward users?
+*** DONE modes of theorizing (how)
+    CLOSED: [2022-03-13 Sun 17:40]
+- we move from behavior toward reasoning.  I think this is inductive.
+  - whereas most theories reason about why the advertiser might act, though it is not as practical.
+  - our model seeks to handle variance rather than describe the process of conversion.
+    
+** TODO read through / understand v2 from Dr. Haas
+- https://onedrive.live.com/view.aspx?resid=1949EA0EB3C04DB1!182057&ithint=file%2cdocx&authkey=!ACt0Yi6wgyTm_qk   
+*** TODO note duplication
+*** TODO add comments concerning the structure of the paper
+** TODO write down and address Dr. Hall's comments in v2
+- copied and pasted a lot of info into the introductions chapter.
+  - there will be some duplication I'll want to remove.   
+- differentiate between the marketing funnel and the secondary approach with user engagements.
+** Note that Dr. Hall left comments on V1.
+- address these in V2
+* Graph Goals for next week
+** TODO Visualize member state + engagement = final state
+** TODO spend more time iterating on the relative sizes
+- might do this one manually too.   
+** TODO create graph (manually) showing movement between clusters.
+** TODO improve labels on the existing graphs (and communication of the data)   
+* Stretch goals for this week
+** TODO address Dr. Haas' comments on the paper too     
+** sankey diagram to show movement from cluster 0 to other clusters
+- https://plotly.com/python/sankey-diagram/
+* Notes
+- Dr. Haas uploaded a v2 of the paper.
+- Having it in this structure helps with streamlining.  Some duplication exists.
+** put all initial data into the intro chapter
+** TODO work through the theory aspects that Dr. Hall sent to me over email.
+   

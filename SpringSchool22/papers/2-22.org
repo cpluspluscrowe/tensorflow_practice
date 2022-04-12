@@ -1,0 +1,33 @@
+* Goals for this week
+** DONE read theory paper:
+   CLOSED: [2022-03-15 Tue 10:15]
+- Makadok, R., Burton, R., & Barney, J. (2018). A practical guide for making theory contributions in strategic management. Strategic Management Journal, 39(6), 1530-1545.
+- A practical guide for making theory contributions in strategic management
+- extend, clarify, and apply
+  - think about the limitations of the theory
+** TODO read through / understand v2 from Dr. Haas
+- https://onedrive.live.com/view.aspx?resid=1949EA0EB3C04DB1!182057&ithint=file%2cdocx&authkey=!ACt0Yi6wgyTm_qk   
+*** TODO note duplication
+*** TODO add comments concerning the structure of the paper
+** TODO write down and address Dr. Hall's comments in v2
+- copied and pasted a lot of info into the introductions chapter.
+  - there will be some duplication I'll want to remove.   
+- differentiate between the marketing funnel and the secondary approach with user engagements.
+** Note that Dr. Hall left comments on V1.
+- address these in V2
+* Graph Goals for next week
+** TODO Visualize member state + engagement = final state
+** TODO spend more time iterating on the relative sizes
+- might do this one manually too.   
+** TODO create graph (manually) showing movement between clusters.
+** TODO improve labels on the existing graphs (and communication of the data)   
+* Stretch goals for this week
+** TODO address Dr. Haas' comments on the paper too     
+** sankey diagram to show movement from cluster 0 to other clusters
+- https://plotly.com/python/sankey-diagram/
+* Notes
+- Dr. Haas uploaded a v2 of the paper.
+- Having it in this structure helps with streamlining.  Some duplication exists.
+** put all initial data into the intro chapter
+** TODO work through the theory aspects that Dr. Hall sent to me over email.
+   

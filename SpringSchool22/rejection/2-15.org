@@ -1,0 +1,56 @@
+# <2022-02-15 Tue>
+
+** Agenda
+- overview of the rejection
+- overall thoughts
+- define next steps
+- decide on the importance of current tasks
+** Action Items
+   
+** Notes
+- more competitive program, what do I need to do?
+- knock out the journals and how we approach this?
+  - how I feel.
+  - IEEE vs MS, night and day.  Same science but different articles
+- rejected articles suck and will happen throughout my life.
+  - part of my world.
+  - you want to get the science out.  Being rejected is not as important.
+    - We have the right information. Think about patterns: top marketing journal, CS half-way. Reviews will be different too.
+    - knocked on IEEE is on the engineering side. Looking at MS is more about theory.
+      - we specifically chose two different types of outlets.
+	- how do we spin this?
+    - choose another marketing journal. MS did not see the theory development they wanted to see.
+      - more interested in the open science journals.
+	- public library of science. Publish any well-done science. We don't want too many of those.
+	  - having a few is alright.
+- Having a few is not bad. We can focus heavily on the models.
+  - wanting to lean heavier into theory.
+    - we have a long list.  Look into the options
+- https://scholar.google.com/citations?view_op=top_venues&hl=en&vq=bus_marketing
+  - we can go up or down.  Methods are regarded as good. How can we build on
+- substantive policy.
+  - I have never done a theory building? Dr. Hall will send me materials (worksheets) on a theory journal on how to develop a theory.
+** TODO Dr. Hall will get me a worksheet concerning theory.
+- How do theorists consider theory. I need to understand what has been said and how is it not yet complete that we can justify the data.
+- what is missing and what do we expect.
+  - and what is the phenomenon are we contributing to.  That's the kickr. 
+** Rejection Email
+Dear Author(s):
+
+Thank you for submitting your manuscript, MKSC-21-0476, entitled Predicting User Interaction on Social Media using Machine Learning, to Marketing Science.
+
+I sent the paper to an expert Associate Editor (AE). Unfortunately, the AE recommended that the paper not be sent to reviewers. The AE had the following comments:
+
+"This paper focuses on a prediction task, where the authors build a model to predict user behavior on social media using both text and image data. The prediction model is well executed and authors show that their prediction model performs well. However, the methods are not novel. 
+
+The main issue is that simply predicting consumer engagement is an insufficient contribution for publication. My suggestion to the authors is to examine how this prediction can be leveraged to answer some important substantive or policy questions in marketing. Or, if the focus is mainly on prediction, then there should be a novel method, theory, or algorithm that can be used in other settings. Further, the authors may benefit from reading the marketing literature on topics related to this paper to get a better sense of how to contribute to this literature. At this point, there is no attempt made to explain how and why this paper relates to the marketing literature. All the best with this research."
+
+Unfortunately, I must agree with the AE's assessment. Moreover, I expect that our reviewers will raise the same concerns. If I send the paper for a full review, the eventual outcome would be negative, and you and the journal would lose 2-3 months.  Therefore, our policy is not to send papers for a full review in such cases.  Accordingly, I am writing to inform you that your manuscript has been regretfully rejected for publication in Marketing Science.
+
+Thank you for submitting your work to Marketing Science.  I hope you are able to find a suitable journal for the paper.
+
+Sincerely,
+
+Prof. Olivier Toubia
+Senior Editor, Marketing Science   
+

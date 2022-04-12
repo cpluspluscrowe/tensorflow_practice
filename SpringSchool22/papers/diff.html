@@ -1,0 +1,659 @@
+diff --git a/.azkabanPlugin.json b/.azkabanPlugin.json
+new file mode 100644
+index 0000000000000000000000000000000000000000..b34752c20d4b75ad5b2dce96159c726cd61c7087
+--- /dev/null
++++ b/.azkabanPlugin.json
+@@ -0,0 +1,8 @@
++{
++    "azkabanUrl": "https://ltx1-holdemaz01.grid.linkedin.com:8443",
++    "azkabanProjName": "reconcileOpensInMail",
++    "azkabanZipTask": "azkabanHoldemHadoopZip",
++    "azkabanValidatorAutoFix": "true",
++    "azkabanUserName": "ccrowe",
++    "azkabanPassword": null
++}
+diff --git a/product-spec.json b/product-spec.json
+index 09df73eaea66db5064da81bbb428bc6c25fd1b53..c3c2359cdbc51c0241af5b0f7424b4967646e4d0 100644
+--- a/product-spec.json
++++ b/product-spec.json
+@@ -103,7 +103,8 @@
+     "repo_name": "SNA"
+   },
+   "dependencyResolution": {},
+-  "external": {
++    "external": {
++    "spark-mllib": "org.apache.spark:spark-mllib_2.11:2.4.3",
+     "assertj": "org.assertj:assertj-core:3.11.1",
+     "avro": "org.apache.avro:avro:1.7.7",
+     "guava": "com.google.guava:guava:23.6-jre",
+diff --git a/tscp-reporting-spark-v2-azkaban/build.gradle b/tscp-reporting-spark-v2-azkaban/build.gradle
+index 8f79cd146972bbf8e68bde0d98cbe5fe6556f318..b7838e0dbff8455930495d35a93710f2139cb4fa 100644
+--- a/tscp-reporting-spark-v2-azkaban/build.gradle
++++ b/tscp-reporting-spark-v2-azkaban/build.gradle
+@@ -16,6 +16,7 @@ dependencies {
+   compileOnly spec.product.'dali-mp'.'dali-data-spark'
+   compileOnly spec.product.'spark-common'.'spark-common_2.11'
+ 
++  compile(spec.external.'spark-mllib')
+   compile spec.external.jool
+   // only need to SasCampaignType
+   compile(spec.product.'tscp'.'tscp-domain-sasapi') { transitive = false }
+diff --git a/tscp-reporting-spark-v2-azkaban/src/main/scala/com/linkedin/ads/reporting/demographics/topn/AdAnalyticsTopNJob.scala b/tscp-reporting-spark-v2-azkaban/src/main/scala/com/linkedin/ads/reporting/demographics/topn/AdAnalyticsTopNJob.scala
+index 922680219a87443d7ca9a28cc57a6fe836cc298e..5046ca5ec5dd969f2350cd710244146c17912911 100644
+--- a/tscp-reporting-spark-v2-azkaban/src/main/scala/com/linkedin/ads/reporting/demographics/topn/AdAnalyticsTopNJob.scala
++++ b/tscp-reporting-spark-v2-azkaban/src/main/scala/com/linkedin/ads/reporting/demographics/topn/AdAnalyticsTopNJob.scala
+@@ -5,51 +5,53 @@ import java.time.LocalDate
+ import com.linkedin.ads.reporting.date.ReportDate._
+ import com.linkedin.ads.reporting.job.{AdsReportingSparkJob, BaseConfig, DateRangeJobRunner}
+ import com.linkedin.events.pinot.derived.ads.AdAnalyticsEvent
+-import com.linkedin.reporting.AdReportingPipeline
+ import com.linkedin.spark.common.lib.EncoderUtils._
+ import com.linkedin.spark.lms.implicits._
++import com.linkedin.tscp.reporting.common.avro.AdAnalyticsEventField
+ import org.apache.spark.DaliSpark
+ import org.apache.spark.sql.functions._
+-
++import org.apache.spark.sql.{Dataset, SparkSession, DataFrame}
+ import scala.reflect.ClassTag
++import org.apache.spark.ml.clustering.KMeansModel
++import org.apache.spark.ml.feature.VectorAssembler
++import org.apache.spark.ml.linalg.Vectors
++import org.apache.spark.ml.feature.StandardScaler
++import org.apache.spark.ml.clustering.KMeans
++import org.apache.spark.mllib.linalg.Vectors
++import com.linkedin.spark.common.lib.{DateUtils, TestUtils}
++import com.linkedin.spark.lms.hdfs.HdfsLogger
+ 
+ case class AdAnalyticsTopNJobConfig(
+     granularity: String,
+     adAnalyticsDailyPath: String,
+     topNOutputPath: String,
+     topNRowsPerCategory: Int = 100,
+-    expandedMemberCompanyTopN: Int = 10000,
+     numberOfOutputFiles: Int = 2)
+     extends BaseConfig
+ 
+ object AdAnalyticsTopNJob extends AdsReportingSparkJob[AdAnalyticsTopNJobConfig] {
+-
+   override val jobClass: Class[_] = getClass
+   override val configClass: ClassTag[AdAnalyticsTopNJobConfig] = ClassTag(classOf[AdAnalyticsTopNJobConfig])
+-
++  import spark.implicits._
+   override def run()(implicit config: AdAnalyticsTopNJobConfig): Unit = {
+-    DateRangeJobRunner
+-      .fromConf(conf)
+-      .runForGranularity(
+-        config.granularity,
+-        (start: LocalDate, _: LocalDate) => {
+-          val analytics = DaliSpark
+-            .createDataFrame(start.dailyOutputPath(config.adAnalyticsDailyPath))
+-            .asExactly[AdAnalyticsEvent]
+-
+-          val topN = AdAnalyticsTopNReport.run(analytics, config.topNRowsPerCategory, config.expandedMemberCompanyTopN)
+-
+-          write(
+-            topN,
+-            start.dailyOutputPath(config.topNOutputPath),
+-            config.numberOfOutputFiles,
+-            partitionColumn = col(AdReportingPipeline.ACCOUNT_ID.getName),
+-            col(AdReportingPipeline.ACCOUNT_ID.getName),
+-            col(AdReportingPipeline.CAMPAIGN_GROUP_ID.getName),
+-            col(AdReportingPipeline.CAMPAIGN_ID.getName),
+-            col(AdReportingPipeline.CREATIVE_ID.getName)
+-          )
+-        }
+-      )
++    val modelPath = "/jobs/tscprep/test/hackathon/ml_model/KMeansImpressionsAssembler3"
++    val i = 1
++//    val firstGroup = AdAnalyticsTopNReport.group(i)
++//    AdAnalyticsTopNReport.createModel(firstGroup, modelPath)
++    val model = KMeansModel.load(modelPath)
++//    AdAnalyticsTopNReport.discoverBestK(model, hdfsLogger)
++    for (i <- 7 to 365 by 7) {
++      val grouped = AdAnalyticsTopNReport.group(i) // create group data for day i
++      val result = AdAnalyticsTopNReport.run(i, model) // predict on group
++      val earlierDate = DateUtils.getDateAgoString(i + 6)
++      val savePath = s"/jobs/tscprep/test/hackathon/predictions/$earlierDate"
++      result
++        .repartition(50)
++        .write
++        .mode("overwrite")
++        .format("com.databricks.spark.csv")
++        .option("header", "true")
++        .save(savePath)
++    }
+   }
+ }
+diff --git a/tscp-reporting-spark-v2-azkaban/src/main/scala/com/linkedin/ads/reporting/demographics/topn/AdAnalyticsTopNReport.scala b/tscp-reporting-spark-v2-azkaban/src/main/scala/com/linkedin/ads/reporting/demographics/topn/AdAnalyticsTopNReport.scala
+index a886d24e8fe46aef3a39280b2df78f50c40c6a9f..4e554782fd83d87f3306ffbf0331b70e686cce66 100644
+--- a/tscp-reporting-spark-v2-azkaban/src/main/scala/com/linkedin/ads/reporting/demographics/topn/AdAnalyticsTopNReport.scala
++++ b/tscp-reporting-spark-v2-azkaban/src/main/scala/com/linkedin/ads/reporting/demographics/topn/AdAnalyticsTopNReport.scala
+@@ -1,99 +1,143 @@
+ package com.linkedin.ads.reporting.demographics.topn
+ 
++import org.apache.spark.storage.StorageLevel
+ import com.linkedin.ads.reporting.utils.AvroUtils
+ import com.linkedin.events.pinot.derived.ads.AdAnalyticsEvent
+ import com.linkedin.spark.common.lib.EncoderUtils._
+ import com.linkedin.spark.lms.functions.SparkEventHeader
+ import com.linkedin.spark.lms.implicits._
+ import com.linkedin.tscp.reporting.common.avro.{AdAnalyticsEventField, AdAnalyticsEventFields}
+-import com.linkedin.tscp.reporting.common.pinot.AdReportingPivot
++import org.apache.spark.DaliSpark
+ import org.apache.spark.sql.expressions.Window
+ import org.apache.spark.sql.functions._
+-import org.apache.spark.sql.{Dataset, Row, SparkSession}
+-
++import org.apache.spark.sql.{Dataset, SparkSession, DataFrame}
++import org.apache.spark.ml.feature.VectorAssembler
++import org.apache.spark.ml.linalg.Vectors
++import org.apache.spark.ml.feature.StandardScaler
++import org.apache.spark.ml.clustering.KMeans
++import org.apache.spark.mllib.linalg.Vectors
++import org.apache.spark.storage.StorageLevel
+ import scala.collection.JavaConverters._
++import com.linkedin.spark.common.lib.{DateUtils, TestUtils}
++import org.apache.spark.ml.clustering.KMeansModel
+ 
+ object AdAnalyticsTopNReport {
+-  val aggregateDimensions = Seq(
+-    AdAnalyticsEventField.DAYS_SINCE_EPOCH,
+-    AdAnalyticsEventField.MONTHS_SINCE_EPOCH,
+-    AdAnalyticsEventField.YEARS_SINCE_EPOCH,
+-    AdAnalyticsEventField.ACCOUNT_ID,
+-    AdAnalyticsEventField.CAMPAIGN_ID,
+-    AdAnalyticsEventField.CREATIVE_ID,
+-    AdAnalyticsEventField.CAMPAIGN_TYPE,
+-    AdAnalyticsEventField.DEMOGRAPHIC_CATEGORY,
+-    AdAnalyticsEventField.DEMOGRAPHIC_VALUE
+-  )
++  val columns = """accountid,
++memberid,
++impressions,
++landingpageclicks,
++otherengagements,
++externalwebsiteconversions,
++externalwebsitepostviewconversions,
++externalwebsitepostclickconversions,
++likes,
++commentlikes,
++comments,
++shares,
++follows,
++oneclickleadformopens,
++oneclickleads,
++companypageclicks,
++datepartition"""
++  import org.apache.hadoop.fs.{FileSystem, Path}
++  import org.apache.spark.SparkContext
++  def delete_group(path: String)(sc: SparkContext): Unit = {
++    val fs = FileSystem.get(sc.hadoopConfiguration)
+ 
+-  private def createExpandedMemberCompanyDemographics(aaes: Dataset[Row])(
+-      implicit spark: SparkSession): Dataset[Row] = {
+-    import spark.implicits._
+-    val memberCompanyColumn: String = AdReportingPivot.MEMBER_COMPANY.getDemographicCategoryValue()
+-    val expandedMemberCompanyColumn: String = AdReportingPivot.MEMBER_COMPANY_EXPANDED.getDemographicCategoryValue()
++    val outPutPath = new Path(path)
++
++    if (fs.exists(outPutPath)) {
++      fs.delete(outPutPath, true)
++    }
++  }
++  //  val modelPath = "/jobs/tscprep/test/hackathon/ml_model/KMeansStandardizedWithImpressionsAssembled"
++  def run(i: Int, model: KMeansModel)(implicit spark: SparkSession): DataFrame = {
++    val earlierDate = DateUtils.getDateAgoString(i + 30)
++    val laterDate = DateUtils.getDateAgoString(i)
++    val path = s"/jobs/tscprep/test/hackathon/groups/$earlierDate"
++    val parameters = Map(
++      DaliSpark.FILTER_EXP -> s"datepartition <= '$laterDate' and datepartition >= '$earlierDate'",
++      DaliSpark.PROJECT_COLS -> columns
++    )
++    val aprilData = DaliSpark.createDataFrame(path, parameters)
++    val withoutAccountOrMemberId = aprilData.drop("memberid").drop("accountid").drop("date")
++    val assembler = new VectorAssembler().setInputCols(withoutAccountOrMemberId.columns).setOutputCol("assembled")
++    val output = assembler.transform(aprilData).select("assembled", "accountid", "memberid").repartition(500).cache
++    val scaler =
++      new StandardScaler().setInputCol("assembled").setOutputCol("features").setWithStd(true).setWithMean(true)
++    val transformed = scaler.fit(output).transform(output).drop("assembled").cache
++
++    val predictions = model.transform(transformed)
++    val predictionAndMemberIds = predictions.select("memberid", "accountid", "prediction").cache
++    val withData = predictionAndMemberIds.join(aprilData, Seq("memberid", "accountid"))
++    delete_group(path)(spark.sparkContext)
++    withData
++  }
+ 
+-    aaes
+-      .filter($"demographicCategory" === memberCompanyColumn)
+-      .withColumn("demographicCategory", lit(expandedMemberCompanyColumn))
++  def createModel(i: Int, modelPath: String)(spark: SparkSession): Unit = {
++    group(i + 30)(spark)
++    val earlierDate = DateUtils.getDateAgoString(i + 30)
++    val laterDate = DateUtils.getDateAgoString(i)
++    val path = s"/jobs/tscprep/test/hackathon/groups/$earlierDate"
++    val parameters = Map(
++      DaliSpark.FILTER_EXP -> s"datepartition <= '$laterDate' and datepartition >= '$earlierDate'",
++      DaliSpark.PROJECT_COLS -> columns
++    )
++    val aprilData = DaliSpark.createDataFrame(path, parameters)
++    val withoutAccountOrMemberId = aprilData.drop("memberid").drop("accountid")
++    val assembler = new VectorAssembler().setInputCols(withoutAccountOrMemberId.columns).setOutputCol("assembled")
++    val output = assembler.transform(aprilData).select("assembled", "accountid", "memberid").repartition().cache
++    val scaler =
++      new StandardScaler().setInputCol("assembled").setOutputCol("features").setWithStd(true).setWithMean(true)
++    val transformed = scaler.fit(output).transform(output).drop("assembled").cache
++    val k = 10
++    val kmeans = new KMeans().setK(k).setSeed(1L)
++    val model = kmeans.fit(transformed)
++    model.save(modelPath)
+   }
+ 
+-  def run(aaes: Dataset[AdAnalyticsEvent], topNRowsPerCategory: Int, expandedMemberCompanyTopN: Int = 0)(
+-      implicit spark: SparkSession): Dataset[AdAnalyticsEvent] = {
+-    val aaeMetricSumColumns = AdAnalyticsEventFields
+-      .metricsWithoutCostAdjustment()
+-      .asScala
+-      .toSeq
+-      .map(f => {
+-        val avroField = AdAnalyticsEvent.SCHEMA$.getField(f.getFieldName)
+-        val typeToCast = AvroUtils.getSparkType(avroField)
+-        sum(
+-          // Default the sum input to 0
+-          when(col(f.getFieldName.toLowerCase).isNotNull, col(f.getFieldName.toLowerCase))
+-            .otherwise(0)
+-        ).cast(typeToCast).as(f.getFieldName)
+-      })
++  def group(i: Int)(implicit spark: SparkSession): Unit = {
++    // changed to only process a single day at a time
++    import spark.implicits._
++    val earlierDate = DateUtils.getDateAgoString(i)
++    val laterDate = DateUtils.getDateAgoString(i)
++
++    val adStatisticsViewPath = "dalids:///tscp_reporting_dali_mp.adstatistics_views"
++    val parameters = Map(
++      DaliSpark.FILTER_EXP -> s"datepartition <= '$laterDate' and datepartition >= '$earlierDate'",
++      DaliSpark.PROJECT_COLS -> columns
++    )
++    val dataset =
++      DaliSpark.createDataFrame(adStatisticsViewPath, parameters).drop("datepartition").persist(StorageLevel.DISK_ONLY)
+ 
+-    val rankedAaes = aaes
+-      .groupBy(aggregateDimensions.map(f => col(f.getFieldName)): _*)
++    val filtered = dataset
++      .repartition(10000)
++      .persist(StorageLevel.DISK_ONLY)
++
++    val grouped = filtered
++      .groupBy("accountid", "memberid")
+       .agg(
+-        aaeMetricSumColumns.head,
+-        aaeMetricSumColumns.tail
+-        // Sometimes industry switches between advertisers, for now select the MAX.
+-        // TODO: Revisit if this is necessary
+-          ++ Seq(
+-            AdAnalyticsEventField.ADVERTISER_COMPANY_ID,
+-            AdAnalyticsEventField.ADVERTISER_INDUSTRY_ID,
+-            AdAnalyticsEventField.ACTIVITY_ID,
+-            AdAnalyticsEventField.CAMPAIGN_GROUP_ID
+-          ).map(f => max(col(f.getFieldName)).as(f.getFieldName)): _*
+-      )
+-      .withColumn(
+-        "impressionsRank",
+-        rank.over(
+-          Window
+-            .partitionBy((aggregateDimensions diff Seq(AdAnalyticsEventField.DEMOGRAPHIC_VALUE))
+-              .map(f => col(f.getFieldName)): _*)
+-            .orderBy(
+-              col(AdAnalyticsEventField.IMPRESSIONS.getFieldName).desc,
+-              col(AdAnalyticsEventField.DEMOGRAPHIC_VALUE.getFieldName).desc)
+-        )
++        sum("impressions").alias("impressions"),
++        sum("landingpageclicks").alias("landingpageclicks"),
++        sum("otherengagements").alias("otherengagements"),
++        sum("externalwebsiteconversions").alias("externalwebsiteconversions"),
++        sum("externalwebsitepostviewconversions").alias("externalwebsitepostviewconversions"),
++        sum("externalwebsitepostclickconversions").alias("externalwebsitepostclickconversions"),
++        sum("likes").alias("likes"),
++        sum("commentlikes").alias("commentlikes"),
++        sum("comments").alias("comments"),
++        sum("shares").alias("shares"),
++        sum("follows").alias("follows"),
++        sum("oneclickleadformopens").alias("oneclickleadformopens"),
++        sum("oneclickleads").alias("oneclickleads"),
++        sum("companypageclicks").alias("companypageclicks")
+       )
+-      .withColumn(AdAnalyticsEventField.SERVING_LOCATION.getFieldName, lit("UNKNOWN"))
+-      .withColumn(AdAnalyticsEventField.LLA_PARTNER_CONVERSION_ID.getFieldName, lit(-1L))
+-      .withColumn(AdAnalyticsEventField.AD_EXPERIMENT_ID.getFieldName, lit(-1L))
+-      .withColumn(AdAnalyticsEventField.COST_ADJUSTMENT_IN_USD.getFieldName, lit(0.0))
+-      .withColumn(AdAnalyticsEventField.COST_ADJUSTMENT_IN_CURRENCY.getFieldName, lit(0.0))
+-      .withColumn(AdAnalyticsEventField.HEADER.getFieldName, SparkEventHeader.lit(appName = "tscp-reporting-spark-v2"))
+-      .withColumn("adPlacement", lit(null))
++      .repartition()
++      .withColumn("date", lit(earlierDate)) // added date, matches with the safe file's name
++      .persist(StorageLevel.DISK_ONLY)
+ 
+-    val topNAaes = rankedAaes
+-      .filter(col("impressionsRank") <= lit(topNRowsPerCategory))
+-      .asExactly[AdAnalyticsEvent]
++    val savePath = s"/jobs/tscprep/test/hackathon/groups/$earlierDate"
+ 
+-    val expandedTopNAaes =
+-      createExpandedMemberCompanyDemographics(rankedAaes)
+-        .filter(col("impressionsRank") <= lit(expandedMemberCompanyTopN))
+-        .asExactly[AdAnalyticsEvent]
+-    topNAaes.union(expandedTopNAaes).asExactly[AdAnalyticsEvent]
++    grouped.write.mode("overwrite").format("com.databricks.spark.avro").option("header", "true").save(savePath)
+   }
+ }
+diff --git a/tscp-reporting-spark-v2-azkaban/src/test/scala/com/linkedin/ads/reporting/demographics/topn/AdAnalyticsTopNReportTest.scala b/tscp-reporting-spark-v2-azkaban/src/test/scala/com/linkedin/ads/reporting/demographics/topn/AdAnalyticsTopNReportTest.scala
+deleted file mode 100644
+index a9f1a2b6fec99c8a12e804c4e8f7657d0d0d0f7f..0000000000000000000000000000000000000000
+--- a/tscp-reporting-spark-v2-azkaban/src/test/scala/com/linkedin/ads/reporting/demographics/topn/AdAnalyticsTopNReportTest.scala
++++ /dev/null
+@@ -1,304 +0,0 @@
+-package com.linkedin.ads.reporting.demographics.topn
+-
+-import com.linkedin.ads.reporting.helper.EventBuilder
+-import com.linkedin.ads.reporting.test.AdsReportingSparkTest
+-import com.linkedin.events.common.ads.pinot.ServingLocation
+-import com.linkedin.events.pinot.derived.ads.AdAnalyticsEvent
+-import com.linkedin.spark.common.lib.EncoderUtils._
+-import com.linkedin.tscp.reporting.common.pinot.AdReportingPivot
+-import org.apache.spark.sql.Dataset
+-import org.scalatest.Matchers._
+-import org.testng.annotations.Test
+-
+-class AdAnalyticsTopNReportTest extends AdsReportingSparkTest {
+-
+-  import spark.implicits._
+-
+-  @Test
+-  def shouldReturnTopNByCategory(): Unit = {
+-    // Given events with overlapping demographics and creatives
+-    val memberEvents: Dataset[AdAnalyticsEvent] = Seq(
+-      // given 3 events for company size
+-      EventBuilder.newAdAnalyticsEvent(e => {
+-        e.accountId = 1
+-        e.campaignGroupId = 2L
+-        e.campaignId = 3
+-        e.creativeId = 4
+-        e.demographicCategory = "memberCompanySize"
+-        e.demographicValue = "SIZE_1"
+-        e.impressions = 10
+-        e.servingLocation = ServingLocation.OFF_SITE
+-      }),
+-      EventBuilder.newAdAnalyticsEvent(e => {
+-        e.accountId = 1
+-        e.campaignGroupId = 2L
+-        e.campaignId = 3
+-        e.creativeId = 4
+-        e.demographicCategory = "memberCompanySize"
+-        e.demographicValue = "SIZE_2_TO_10"
+-        e.impressions = 10
+-        e.servingLocation = ServingLocation.ON_SITE
+-        e.llaPartnerConversionId = 50L
+-      }),
+-      EventBuilder.newAdAnalyticsEvent(e => {
+-        e.accountId = 1
+-        e.campaignGroupId = 2L
+-        e.campaignId = 3
+-        e.creativeId = 4
+-        e.demographicCategory = "memberJobTitle"
+-        e.demographicValue = "1"
+-        e.impressions = 1
+-        e.servingLocation = ServingLocation.ON_SITE
+-        e.llaPartnerConversionId = 50L
+-      }),
+-      EventBuilder.newAdAnalyticsEvent(e => {
+-        e.accountId = 1
+-        e.campaignGroupId = 2L
+-        e.campaignId = 3
+-        e.creativeId = 4
+-        e.demographicCategory = "memberCompanySize"
+-        e.demographicValue = "SIZE_51_TO_200"
+-        e.impressions = 5
+-        e.servingLocation = ServingLocation.OFF_SITE
+-      })
+-    ).toDS()
+-
+-    // When daily AdAnalyticsEvent topN report is run
+-    val output = AdAnalyticsTopNReport.run(memberEvents, 2)
+-
+-    // Then we should have 3 events, two company size, one job title
+-    output.count() shouldBe 3
+-
+-    // And we should have selected company size by impressions
+-
+-    output
+-      .filter(_.demographicCategory == "memberCompanySize")
+-      .map(_.demographicValue.toString)
+-      .collect
+-      .toSet shouldBe Set("SIZE_1", "SIZE_2_TO_10")
+-
+-    // And still retained job title even though it had less impressions than the smallest company size
+-    output
+-      .filter(_.demographicCategory == "memberJobTitle")
+-      .map(_.demographicValue.toString)
+-      .collect
+-      .toSet shouldBe Set("1")
+-
+-    // And we should force Top N to unknown serving location and no llaPartnerConversionId
+-    output.foreach(aae => aae.servingLocation shouldBe ServingLocation.UNKNOWN)
+-    output.foreach(aae => aae.llaPartnerConversionId shouldBe -1L)
+-  }
+-
+-  @Test
+-  def shouldSelectMaximumCompanyIdAndIndustryIdAndCampaignGroupIdAndActivityId(): Unit = {
+-    // Given events with overlapping demographics and creatives
+-    val aaes: Dataset[AdAnalyticsEvent] = Seq(
+-      // an event with two different advertiser company IDs and industry IDs
+-      EventBuilder.newAdAnalyticsEvent(e => {
+-        e.accountId = 1
+-        e.campaignGroupId = 2L
+-        e.campaignId = 3
+-        e.creativeId = 4
+-        e.demographicCategory = "memberJobTitle"
+-        e.demographicValue = "1"
+-        e.impressions = 1
+-        e.servingLocation = ServingLocation.ON_SITE
+-        e.llaPartnerConversionId = 50L
+-        e.advertiserCompanyId = 10
+-        e.advertiserIndustryId = 11
+-        e.activityId = 14L
+-      }),
+-      EventBuilder.newAdAnalyticsEvent(e => {
+-        e.accountId = 1
+-        e.campaignGroupId = 5L
+-        e.campaignId = 3
+-        e.creativeId = 4
+-        e.demographicCategory = "memberJobTitle"
+-        e.demographicValue = "1"
+-        e.impressions = 1
+-        e.servingLocation = ServingLocation.ON_SITE
+-        e.llaPartnerConversionId = 50L
+-        e.advertiserCompanyId = 12
+-        e.advertiserIndustryId = 13
+-        e.activityId = 15L
+-      })
+-    ).toDS()
+-
+-    // When daily topN report is run
+-    val output = AdAnalyticsTopNReport.run(aaes, 2)
+-
+-    // Then we should have gotten 1 row
+-    output.count() shouldBe 1
+-
+-    // And we should force Top N to max advertiser industry and account company
+-    val aae = output.take(1).apply(0)
+-    aae.advertiserCompanyId shouldBe 12
+-    aae.advertiserIndustryId shouldBe 13
+-    aae.activityId shouldBe 15L
+-    aae.campaignGroupId shouldBe 5L
+-  }
+-
+-  @Test
+-  def shouldBreakTopNTiesByDemographicValue(): Unit = {
+-    // Given event with two demographicValues with the same number of impressions
+-    val aaes: Dataset[AdAnalyticsEvent] = Seq(
+-      EventBuilder.newAdAnalyticsEvent(e => {
+-        e.accountId = 1
+-        e.campaignGroupId = 2L
+-        e.campaignId = 3
+-        e.creativeId = 4
+-        e.demographicCategory = "memberCompanySize"
+-        e.demographicValue = "SIZE_1"
+-        e.impressions = 1
+-      }),
+-      EventBuilder.newAdAnalyticsEvent(e => {
+-        e.accountId = 1
+-        e.campaignGroupId = 2L
+-        e.campaignId = 3
+-        e.creativeId = 4
+-        e.demographicCategory = "memberCompanySize"
+-        e.demographicValue = "SIZE_2_TO_10"
+-        e.impressions = 1
+-      })
+-    ).toDS()
+-
+-    // When topN report is ran with a restriction to only the top 1
+-    val output = AdAnalyticsTopNReport.run(aaes, 1)
+-
+-    // And topN report returns just the top company size
+-    output.count() shouldBe 1 // 1 company size
+-
+-    // And the selected demographicValue is the larger when sorted lexicographically
+-    val aae = output.take(1).apply(0)
+-    aae.demographicValue shouldBe "SIZE_2_TO_10"
+-  }
+-
+-  @Test
+-  def shouldGenerateExpandedCompanies(): Unit = {
+-    // Given a dataset containing memberCompany demographic data
+-    val expandedMemberCompanyTopN = 1
+-    val demographicValue1 = "companyTitle1"
+-    val demographicValue2 = "companyTitle2"
+-    val memberCompanyColumn = AdReportingPivot.MEMBER_COMPANY.getDemographicCategoryValue()
+-    memberCompanyColumn shouldBe "memberCompany"
+-    val expandedMemberCompanyColumn: String = AdReportingPivot.MEMBER_COMPANY_EXPANDED.getDemographicCategoryValue()
+-    val lowerValue = 1
+-    val higherValue = 2
+-    val aaes: Dataset[AdAnalyticsEvent] = Seq(
+-      EventBuilder.newAdAnalyticsEvent(e => {
+-        e.accountId = 1
+-        e.campaignGroupId = 2L
+-        e.campaignId = 3
+-        e.creativeId = 4
+-        e.demographicCategory = memberCompanyColumn
+-        e.demographicValue = demographicValue1
+-        e.impressions = higherValue
+-      }),
+-      EventBuilder.newAdAnalyticsEvent(e => {
+-        e.accountId = 1
+-        e.campaignGroupId = 2L
+-        e.campaignId = 3
+-        e.creativeId = 4
+-        e.demographicCategory = "nonMemberCompanyColumn"
+-        e.demographicValue = demographicValue2
+-        e.impressions = lowerValue
+-      })
+-    ).toDS()
+-
+-    // when the dataset is processed
+-    val output: Dataset[AdAnalyticsEvent] =
+-      AdAnalyticsTopNReport.run(aaes, 0, 1)
+-
+-    // the memberCompany demographic data has been renamed to memberCompanyExpanded
+-    output.count() shouldBe 1
+-    val aae = output.take(1).apply(0)
+-    aae.demographicCategory shouldBe expandedMemberCompanyColumn
+-    aae.demographicValue shouldBe demographicValue1
+-  }
+-
+-  @Test
+-  def shouldOnlyGenerateExpandedCompaniesForTheMemberCompanyDemographic(): Unit = {
+-    // Given a dataset containing memberCompany demographic data
+-    // and a larger topN
+-    val expandedMemberCompanyTopN = 100
+-    val demographicValue = "companyTitle1"
+-    val memberCompanyColumn = AdReportingPivot.MEMBER_COMPANY.getDemographicCategoryValue()
+-    val expandedMemberCompanyColumn: String = AdReportingPivot.MEMBER_COMPANY_EXPANDED.getDemographicCategoryValue()
+-    val lowerValue = 1
+-    val higherValue = 2
+-    val aaes: Dataset[AdAnalyticsEvent] = Seq(
+-      EventBuilder.newAdAnalyticsEvent(e => {
+-        e.accountId = 1
+-        e.campaignGroupId = 2L
+-        e.campaignId = 3
+-        e.creativeId = 4
+-        e.demographicCategory = memberCompanyColumn
+-        e.demographicValue = demographicValue
+-        e.impressions = higherValue
+-      }),
+-      EventBuilder.newAdAnalyticsEvent(e => {
+-        e.accountId = 1
+-        e.campaignGroupId = 2L
+-        e.campaignId = 3
+-        e.creativeId = 4
+-        e.demographicCategory = "nonMemberCompanyDemographicCategory"
+-        e.demographicValue = demographicValue
+-        e.impressions = lowerValue
+-      })
+-    ).toDS()
+-
+-    // when the dataset is processed
+-    val output: Dataset[AdAnalyticsEvent] =
+-      AdAnalyticsTopNReport.run(aaes, 0, 1)
+-
+-    // only the member company demographic data is captured
+-    output.count() shouldBe 1
+-    val aae = output.take(1).apply(0)
+-    aae.demographicCategory shouldBe expandedMemberCompanyColumn
+-    aae.demographicValue shouldBe demographicValue
+-  }
+-
+-  @Test
+-  def shouldReturnTopNForMemberCompanyAndExpanded(): Unit = {
+-    val memberCompanyColumn = AdReportingPivot.MEMBER_COMPANY.getDemographicCategoryValue()
+-    val expandedMemberCompanyColumn: String = AdReportingPivot.MEMBER_COMPANY_EXPANDED.getDemographicCategoryValue()
+-    val demographicValue = "1"
+-    // Given raw dataset, and topn for regular and expanded
+-    // When running the top N job
+-    // It should generate results for regular and expanded
+-    val memberEvents: Dataset[AdAnalyticsEvent] = Seq(
+-      EventBuilder.newAdAnalyticsEvent(e => {
+-        e.accountId = 1
+-        e.campaignGroupId = 2L
+-        e.campaignId = 3
+-        e.creativeId = 4
+-        e.demographicCategory = memberCompanyColumn
+-        e.demographicValue = demographicValue
+-        e.impressions = 10
+-        e.servingLocation = ServingLocation.OFF_SITE
+-      })
+-    ).toDS()
+-
+-    // When daily AdAnalyticsEvent topN report is run
+-    val output = AdAnalyticsTopNReport.run(memberEvents, 1, 1)
+-
+-    // Then we should have 2 events, member companies topN and expanded topN
+-    output.count() shouldBe 2
+-
+-    // And we should have member companies topN
+-
+-    output
+-      .filter(_.demographicCategory == memberCompanyColumn)
+-      .map(_.demographicValue.toString)
+-      .collect
+-      .toSet shouldBe Set(demographicValue)
+-
+-    // And we should have expanded companies topN
+-
+-    output
+-      .filter(_.demographicCategory == expandedMemberCompanyColumn)
+-      .map(_.demographicValue.toString)
+-      .collect
+-      .toSet shouldBe Set(demographicValue)
+-  }
+-}

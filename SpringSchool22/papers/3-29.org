@@ -1,0 +1,37 @@
+** TODO spend some time considering how cohorts might intersect with my paper (modeled conversions)
+- find public paper concerning current practice (public policy) and build on this policy document.
+  - this parti
+** TODO Dr. Hall is going to look into theory and fit to call.
+- 
+** TODO Visualize member state + engagement = final state
+Clusters:
+0, External website conversions
+1, likes, other engagements
+2, shares, other engagements
+3, website postview conversions, external website conversions
+4, impressions, external website conversions
+5, landing page clicks, other engagements
+6, company page clicks, other engagements
+7, comment likes, comments
+8, company page clicks, other engagements
+9, external website post click conversions, external website conversions
+
+*** Most extreme standard deviations
+9 <- probably very view external website post click conversion?
+3 <- same with website conversion
+8 <- then company clicks except very high other engagements
+7
+2
+1
+6
+5
+4 <- Good that impressions is the second lowest change
+0 <- notice how 0 is the cluster of a lack of activity.  
+
+
+** DONE add colored paths to sankey diagram
+   CLOSED: [2022-03-29 Tue 19:08]
+** DONE 8am interview tomorrow
+   CLOSED: [2022-04-11 Mon 16:57]
+** TODO minor fix in the results section with wording
+** TODO fix table 2.  External website conversions showing up twice.  No std dev.

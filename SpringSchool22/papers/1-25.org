@@ -1,0 +1,222 @@
+* Paper
+
+I think the predictive ability shows the clusters are useful.  i.e., because they improve our understanding of member behavior in relation to engagement, they are beneficial.
+
+  40 and 19
+  
+In a preliminary study, we tested different time ranges (including day, week, and month), and determined / found that
+** DONE look into the steps to reproduce the data.
+   CLOSED: [2022-01-28 Fri 06:46]
+1. need the scala script.
+   a. need the python model training script
+2. make changes per changes to our data storage
+3. run in darwin, thank goodness
+4. save data
+5., do the training via pyspark, batch train in python with sklearn again  <- new skill
+*** DONE find my scripts (where are these???)
+    CLOSED: [2022-01-28 Fri 06:31]
+- hopefully, not on my old computer.
+- I think on Darwin :D
+- spent a bunch of time.  I'm sure it's on rb but I need to go through them one at a time.
+  - I wish I'd remembered the file's name.
+https://rb.corp.linkedin.com/r/2326625/diff/1/    
+** DONE examine/study/comment concerning explaining ml models/predictions via github
+   CLOSED: [2022-01-28 Fri 06:45]
+   - nice, went through an sklearn notebook too.
+- https://github.com/slundberg/shap
+- very useful graphics for top-management journals.
+- think about how to visualize this or the feature importance.
+  - feature importance === global importance (in the github).
+  - not 1:1 on prediction importance.
+    - local explainability.
+*** focus on the significant results (only visualize these)
+- also a contribution where we better communicate these model via explainable visualizations.  
+** DONE [#A] provide paper changes from Dr. Haas
+   CLOSED: [2022-02-01 Tue 08:33]
+*** DONE locate the link for the paper
+    CLOSED: [2022-01-28 Fri 08:32]
+- https://onedrive.live.com/view.aspx?resid=1949EA0EB3C04DB1!182057&ithint=file%2cdocx&authkey=!ACt0Yi6wgyTm_qk
+*** DONE locate my notes
+    CLOSED: [2022-01-28 Fri 08:40]
+*** DONE - rename on LinkedIn marketing funnel vs large proprietary dataset
+    CLOSED: [2022-01-28 Fri 09:02]
+*** DONE - Can we add a generalized conclusion/implication that our methodology identifies the prediction of movements, even predicts engagements?  Yes
+    CLOSED: [2022-01-28 Fri 09:11]
+- the value add is general value to companies over manual identification. Also, they cannot predict funnel stage transitions.
+
+- Our methodology of a data-driven market funnel identification and subsequent prediction of movements between the funnel stages allows companies to better track and predict movements / relevant engagements. Moreover, it is easily customized due to the data-driven nature, and it can provide general value to companies over manual identification for being able to predict funnel stage transitions.
+*** DONE - major contributions    
+    CLOSED: [2022-01-28 Fri 10:32]
+  - 1. using a data-driven model to create the marketing funnel
+  - 2. use predictive analytics of this data-driven model to analyze the funnel and predict customer transitions.
+  -   
+*** DONE - Question
+    CLOSED: [2022-01-28 Fri 10:32]
+  - should we focus on  a data-driven approach as a new way of building, analyzing, and applying the marketing funnel?  Yes
+  - or show as a case study for its results <- no
+*** DONE - rewrite first sentence of problem statement as the main research question
+    CLOSED: [2022-01-28 Fri 10:32]
+*** DONE - point toward business implications, dollar bills, Dr. Haas uses word y'all, Nebraska influence?  maybe, needs further research
+    CLOSED: [2022-01-28 Fri 10:32]
+*** DONE - early on, include the reason to not include the primary cluster center metric, within the aim and scope.
+    CLOSED: [2022-01-28 Fri 10:36]
+- actually, we do include it!  My previous paper with Dr. Hall we ignore it but we do consider it within this paper.  
+*** DONE - expound on what optimization means
+    CLOSED: [2022-01-28 Fri 10:56]
+  - optimized targeting.
+- updated the entire first paragraph of the marketing funnel.    
+*** DONE - Yes, later stages of the marketing funnel correlate to higher ROI
+    CLOSED: [2022-01-28 Fri 11:03]
+- yes, I fixed how this is said.
+  
+*** TODO - We should compare our created stages with previous research.  Great few paragraphs for the related works.
+*** TODO - we is all of us. I can change to this study
+*** TODO - more emphasis on the crucial statement, there are multiple theories but they are imposed on the data instead of derived from the data.
+*** TODO - provide a section on 1. how we will answer the RQs, b. what the most important results are, 3. what are the main implications for a. researchers, and b. practitioners.
+  - include this immediately after the RQs.
+*** TODO - correct ask for the RQs.  Why vs. how.
+*** TODO - yes, we can re-construct cluster flows, but it might occur frequently.  By including the many noisy results we have less data for the model to use vs a binary, eventual transition.
+*** TODO - all eventual transitions are captured by one of the models.  We have a model per transition, not one model that classifies the transition.
+*** TODO - k-means is technically the first model, logistic/rf classification the second
+*** TODO - please visualize the marketing funnel (I can now do this in R, I think).  I found a ggplot library for it!
+*** TODO - The cluster transitions do not occur or are too few to model if we have a dash (todo: check)
+*** TODO - do not say problem, use the word limitation
+*** TODO - we ran both scaled and not-scaled.  The not-scaled were dominated by the few noisy metrics like the types of impressions, i.e., less valuable engagement.
+*** TODO - valid alternative might be using a weighted k-means, put higher weights on variables we think are important
+  - great followup
+*** TODO - we only include transitions in this table.
+*** TODO - discuss more downsides of weekly vs. monthly    
+** TODO [#C] find citations from this journal I can include.
+- goal is to find something kind-of close to my method.
+*** TODO Do we discuss this in later stages? I.e., the similarity of the data-driven funnel to proposed marketing funnels from research?
+-  I'll add a todo and address in the discussion.
+*** TODO After the RQs, we should provide information on a) how we answer the RQs, b) what the most important overall results are, and c) what the main implications of these results are for researchers and practitioners   
+*** DONE find the journal url  
+    CLOSED: [2022-01-28 Fri 08:34]
+- https://www.journals.elsevier.com/international-journal-of-research-in-marketing/call-for-papers/special-issue-on-the-tensions-and-opportunities-of-new-technologies-in-marketing    
+** TODO [#B] visualize clusters
+- tables themselves are more difficult to interpret
+  - look for an improved method of communication
+** there exists the possibility to re-create models in order to use the 
+** Main Comments
+- this is still the independent study paper.
+- need to figure out the main contribution of the paper.
+- need a restructure
+  - if our main contribution is describing transitions, then restructure to emphasize our study.
+  - i.e., we made some assumptions about clustering.
+    - possibly reference an under-review paper.
+    - ensure our discussion revolves around the transition.
+- 1. target the special issue
+  - one bullet point concerns the opportunities AND challenges of using new technologies to do this.
+    - opportunity for an extended discussion, a data-driven approach which companies can create.
+      - with accuracy, we can predict the cluster transitions
+	- the challenges (connection with limitations), there are so many challenges due to its data-driven approach.
+	  - it is not trivial to create a single model that applies to any dataset. The contribution is the clear opportunity of using such an algo. We also have cautionary tales concerning the implications of weekly vs. monthly data.
+- explainable AI -
+  - how to open the black box. How can we explain individual predictions?
+    - model-agnostic, explainable AI.  For a particular customer, the p(A->B) = x%.
+** paper name :: Detecting and Predicting Customer Transitions in the Marketing Funnel  
+*** DONE find formatting for the journal
+    CLOSED: [2022-01-23 Sun 16:03]
+- There are no strict formatting requirements but all manuscripts must contain the essential elements needed to convey your manuscript, for example Abstract, Keywords, Introduction, Materials and Methods, Results, Conclusions, Artwork and Tables with Captions.
+
+** Problem: cannot read the articles.  I used the unomaha VPN too and logged in for access.
+** DONE - read Dr. Haas' comments
+- rename on LinkedIn marketing funnel vs large proprietary dataset
+- Can we add a generalized conclusion/implication that our methodology identifies the prediction of movements, even predicts engagements?  Yes
+  - the value add is general value to companies over manual identification. Also, they cannot predict funnel stage transitions.
+- major contributions    
+  - 1. using a data-driven model to create the marketing funnel
+  - 2. use predictive analytics of this data-driven model to analyze the funnel and predict customer transitions.
+- Question
+  - should we focus on  a data-driven approach as a new way of building, analyzing, and applying the marketing funnel?  Yes
+  - or show as a case study for its results <- no
+- rewrite first sentence of problem statement as the main research question
+- point toward business implications, dollar bills, Dr. Haas uses word y'all, Nebraska influence?  maybe, needs further research
+- early on, include the reason to not include the primary cluster center metric, within the aim and scope.
+  - including why.
+- expound on what optimization means
+  - optimized targeting.
+- Yes, later stages of the marketing funnel correlate to higher ROI
+- We should compare our created stages with previous research.  Great few paragraphs for the related works.
+- we is all of us. I can change to this study
+- more emphasis on the crucial statement, there are multiple theories but they are imposed on the data instead of derived from the data.
+- provide a section on 1. how we will answer the RQs, b. what the most important results are, 3. what are the main implications for a. researchers, and b. practitioners.
+  - include this immediately after the RQs.
+- correct ask for the RQs.  Why vs. how.
+- yes, we can re-construct cluster flows, but it might occur frequently.  By including the many noisy results we have less data for the model to use vs a binary, eventual transition.
+- all eventual transitions are captured by one of the models.  We have a model per transition, not one model that classifies the transition.
+- k-means is technically the first model, logistic/rf classification the second
+- please visualize the marketing funnel (I can now do this in R, I think).  I found a ggplot library for it!
+- The cluster transitions do not occur or are too few to model if we have a dash (todo: check)
+- do not say problem, use the word limitation
+- we ran both scaled and not-scaled.  The not-scaled were dominated by the few noisy metrics like the types of impressions, i.e., less valuable engagement.
+- valid alternative might be using a weighted k-means, put higher weights on variables we think are important
+  - great followup
+- we only include transitions in this table.
+- discuss more downsides of weekly vs. monthly
+** DONE get global connect working for accessing articles   
+   CLOSED: [2022-01-23 Sun 16:36]
+- question is whether we look into doing hierarchical clustering
+  - depends on the approach within the journal / state of the art for this journal (kmeans vs hierarchical).
+    - is clustering a well-known method.  We also might be one of the first to look at clustering of user engagements (likely we're one of the first).
+*** DONE look at the journal and its methods for clustering (kmeans vs hierarchical), or something else entirely.
+    CLOSED: [2022-01-23 Sun 17:49]
+- what is the standard in this journal for when to user clustering?
+- https://www.sciencedirect.com/science/article/abs/pii/016781169500026X (1995)
+  - chain-constrained” clustering method
+  - Distances in the semantic space are used to identify the dominant chains through an objective
+  - more or less kmeans clustering, distance is based on semantic distances.    
+- https://www.sciencedirect.com/science/article/abs/pii/S0167811697880408 (1997)
+  - ANN clustering, German, not sure
+- https://www.sciencedirect.com/science/article/abs/pii/0167811690900014 (1990)
+  - cluster-asymmetric attraction specification for market share response
+  - Using the Nested Logit model
+    - using logit probabilities to classify into clusters.  
+- https://www.sciencedirect.com/science/article/abs/pii/0167811686900157 (1986)
+  - fuzzy clustering methods
+  - The classification types partition, overlapping classification and fuzzy partition are explained.
+- https://www.sciencedirect.com/science/article/pii/0167811692900089
+  - cluster-asymmetry market share model
+- https://www.sciencedirect.com/science/article/abs/pii/S016781161830034X (2018)
+  - Clustering images [enables to identify heterogeneous brand-related situations.]
+  - Mapping textual information [visualizes how a brand is perceived in each cluster.]
+  - Brand associations and sentiment [vary across different brand-related situations.]
+- https://www.sciencedirect.com/science/article/abs/pii/S0167811603000363
+- hierarchical model (2003)
+*** DONE look at the state of existing paper that utilize user engagement, in which way?  Clustering?
+    CLOSED: [2022-01-23 Sun 17:49]
+- not a single POV that shows up.  Seems to move more toward modeling but no large methodology or primary pattern around the word clustering.
+*** next week we will spend more time on how to spin this paper.
+- (contribution), even simple models also provide a probability so you can rank customers based on their likelihood to move within the funnel
+  - cool approach for anyone who wants to adopt the methodology in practice.
+- spin how we have access to this data and its value to this journal.    
+
+  
+*** School Meeting Notes
+- classes this semester   
+  - strategic business analytics
+  - cyber security
+  - entire business ciriculum, how does one go about managing it?  What does the CIO do?
+    - cool to create something that's yours.  A ton of work to do well.   
+https://www.journals.elsevier.com/international-journal-of-research-in-marketing/call-for-papers/special-issue-on-the-tensions-and-opportunities-of-new-technologies-in-marketing
+- introspection on how new technologies affect user behavior.  Build on the tension between users and social media platforms.
+     - Hi you two: I want to think about targeting this Special Issue for the engagement clusters paper. Give it a read and we can talk in January. Special Issue on: The Tensions and Opportunities of New Technologies in Marketing - Call for papers - International Journal of Research in Marketing - Journal - Elsevier
+- Preproposal Defense (check with Dr. Brian when that is due).
+  - this consists of another set of presentations and the entire committe.
+(https://www.journals.elsevier.com/international-journal-of-research-in-marketing/call-for-papers/special-issue-on-the-tensions-and-opportunities-of-new-technologies-in-marketing)
+  
+
+
+
+* Statistics
+** TODO view video lectures
+** TODO view sample lectures, work out all problems
+- create more tasks as I work through these   
+** TODO email professor that I work and my hours
+- looks like he's pairing up students.
+** TODO understand the scope of the first quiz
+   
+   
+* Next week tasks (generated over the past week)
+** TODO I can try to speak to the potential revenue implications.  The benefit will increase engagements by x% at each stage of the marketing funnel, which result in considerable increases in the population at latter funnel stages.  

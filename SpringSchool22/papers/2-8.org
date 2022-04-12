@@ -1,0 +1,56 @@
+# 2-8-22 Meeting
+* Current Paper
+** DONE visualize content this week
+   CLOSED: [2022-02-22 Tue 07:29]
+*** DONE list the possible visualizations
+    CLOSED: [2022-02-22 Tue 07:29]
+**** DONE weight LOE vs LOI for each version.    
+     CLOSED: [2022-02-22 Tue 07:29]
+*** DONE Consider visualizing via a Sankey diagram for user flows through the funnel
+    CLOSED: [2022-02-22 Tue 07:29]
+- percentage outflow between stages
+It would be super interesting to visualize this marketing funnel graphically. E.g., using a sankey diagram or similar flow diagram, visualize  how often cluster transitions occur.    
+** TODO I can try to speak to the potential revenue implications.  The benefit will increase engagements by x% at each stage of the marketing funnel, which result in considerable increases in the population at latter funnel stages.
+
+* Progress
+- Need to practice statistics problems before the exam, do some later tonight.
+*** DONE - need to write down ideas for possible visualizations.
+    CLOSED: [2022-02-15 Tue 06:58]
+- table of metrics
+  - needs updating too
+**** DONE add a title to the table of metrics.    
+     CLOSED: [2022-02-22 Tue 07:29]
+- K-means cluster chart
+  - you can visualize the clusters
+    - and visualize the size of movements between clusters.
+**** DONE visualize the k-means clusters in relative size and their connection size
+     CLOSED: [2022-02-22 Tue 07:29]
+- Confidence tables for the cluster transitions precision, recall, and f-score.
+  - better tables for this data
+- massive table concerning the important metrics for predicting cluster transitions.
+  - need a huge update on the primary predictive metrics
+- update Table 7, no reason for metric 1 and metric 2 to not be more concise.
+- cluster transitions, 0-7 shown.
+**** DONE find cluster transitions for 8 and 9??  Maybe non-existent.
+     CLOSED: [2022-02-22 Tue 07:29]
+
+* Rejected Paper                                                    :ARCHIVE:
+- meeting on 2/15 to discuss next steps
+
+* Notes                                                             :ARCHIVE:
+- Need to update tables, possibly translate to images or something more digestible.
+- focus on the theoretical argument first.
+  - 2.25 in related work. Do we feel it is a theory argument?
+** DONE - it would be beneficial to approach the how and why things work, and how we respond
+   CLOSED: [2022-02-17 Thu 18:54] SCHEDULED: <2022-03-08 Tue>
+   - we had this meeting on Tuesday and laid out our approach
+     - going to approach with a heavier theory section
+** DONE - let's back into data science.
+   CLOSED: [2022-02-17 Thu 18:54] SCHEDULED: <2022-02-20>
+   - nope, going to stay in marketing
+- we'll come back in two weeks
+  - Dr. Haas will do some restructuring over the next two weeks
+    - highlights that we feel the structure can be improved as-is.
+- note that misq is big on theory.
+  - consider bringing in committee person for the marketing science one <- add another person on the paper (only for papers in the marketing science domain).
+    
