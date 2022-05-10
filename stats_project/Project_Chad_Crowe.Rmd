@@ -1,0 +1,113 @@
+---
+title: "Project - Chad Crowe"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r echo=FALSE, result=FALSE}
+#For your project you must collect any types of data and apply chapter 6, 7 , or 8. I say chapter 8 might be enough. Assume is like exam and only describe your data. How did you get it and do the analysis.
+
+# We want an output, such as a high house price.  We then can use demographic information.
+# we can even look at a subset of variables. The trick is that we need all the right combinations of measurements.
+# so it must be a statistical experiemnt.
+
+setwd("/Users/ccrowe/github/stats_project")
+data <- read.csv("preprocessed.csv")
+# predict Price based on the other factors?? Nah, I need an experiment.
+
+#4.3 user rating
+#512 disk size
+#1189 price
+#3.6 speed
+#16 ram
+
+```
+We first load the input data and make each column into factors.
+```{r,warning=FALSE,message=FALSE,echo=FALSE}
+library(tidyverse)
+data <- read.csv("for_sas.csv")
+data$company_block = factor(data$company_block)
+data$spec_block = factor(data$spec_block)
+data$user_rating = factor(data$user_rating)
+data$disk_size = factor(data$disk_size)
+data$speed = factor(data$speed)
+data$ram = factor(data$ram)
+
+data <- data %>% select(company_block, spec_block, user_rating, disk_size, price, speed, ram)
+```
+
+We can then look at a summary of the data.
+
+```{r echo=FALSE}
+summary(data)
+hist(data$price,main="Histogram of Price, Not Transformed")
+```
+
+The data is not normal. We found the most normal transformation occurred from the reciprocal transformation. 
+
+```{r echo=FALSE}
+# # check transform
+# # no transform first.  Does not look very normal.
+# data.aov = aov(price ~ user_rating * disk_size * ram * speed + spec_block + company_block, data = data)
+# plot(data.aov)
+# shapiro.test(data$price)
+# 
+# # Try square root (not normal as all)
+# df2 <- df
+# df2$price <- sqrt(df2$price)
+# hist(df2$price)
+# model <- aov(price ~ user_rating * disk_size * ram * speed + spec_block + company_block, data=df2)
+# summary(model)
+# plot(model)
+# shapiro.test(df2$price)
+# # this is more normal, a little wavy, still a right skew
+# 
+# # log, still does not look normal.
+# df2 <- df
+# df2$price <- log(df2$price)
+# hist(df2$price)
+# model <- aov(price ~ user_rating * disk_size * ram * speed + spec_block + company_block, data=df2)
+# summary(model)
+# plot(model)
+# shapiro.test(df2$price)
+# 
+# # reciprocal square root
+# df2 <- df
+# df2$price <- 1/sqrt(df2$price)
+# hist(df2$price)
+# model <- aov(price ~ user_rating * disk_size * ram * speed + spec_block + company_block, data=df2)
+# summary(model)
+# plot(model)
+# shapiro.test(df2$price)
+
+# reciprocal
+df2 <- data
+df2$price <- 1/df2$price
+hist(df2$price,main="Histogram of Price after the Reciprocal Transformation")
+#model <- aov(price ~ user_rating * disk_size * ram * speed + spec_block + company_block, data=df2)
+#summary(model)
+#plot(model)
+#shapiro.test(df2$price)
+
+
+```
+
+We can then do a model of the variables without blocking.
+
+```{r model}
+data.aov = aov(price ~ user_rating * disk_size * ram * speed, data = df2)
+summary(data.aov)
+
+```
+
+Note that the interaction of ram*speed is only significant when we use the company block.
+
+```{r}
+data.aov = aov(price ~ user_rating * disk_size * ram * speed + spec_block + company_block, data = df2)
+summary(data.aov)
+
+# 
+
+
+```
